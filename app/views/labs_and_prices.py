@@ -17,7 +17,7 @@ class LabsAndPricesAPIView(APIView):
         proper_labs = []
         for lab in Laboratory.objects.all():
             for test_id in test_ids:
-                if not lab.test.filter(test_description_id=test_id).exists():
+                if not lab.tests.filter(test_description_id=test_id).exists():
                     break
             else:
                 proper_labs.append(lab)
@@ -26,7 +26,7 @@ class LabsAndPricesAPIView(APIView):
         for lab in proper_labs:
 
             data_instance = dict()
-            data_instance[id] = lab.id
+            data_instance['id'] = lab.id
             data_instance['name'] = lab.name
 
             lab_total_cost = 0
@@ -36,4 +36,4 @@ class LabsAndPricesAPIView(APIView):
             data_instance['price'] = lab_total_cost
             data.append(data_instance)
 
-        return JsonResponse(status=status.HTTP_200_OK, data=data)
+        return JsonResponse(status=status.HTTP_200_OK, data=data, safe=False)
