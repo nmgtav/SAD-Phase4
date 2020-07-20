@@ -12,10 +12,6 @@ class LabTest(models.Model):
 
     lab = models.ForeignKey(
         to=Laboratory,
+        on_delete=models.CASCADE,
         related_name='tests'
     )
-
-
-    
-    
-
