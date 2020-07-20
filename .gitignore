@@ -122,7 +122,6 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-.idea/
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -239,6 +238,7 @@ fabric.properties
 # Cache file creation bug
 # See https://youtrack.jetbrains.com/issue/JBR-2257
 .idea/$CACHE_FILE$
+.idea/
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
