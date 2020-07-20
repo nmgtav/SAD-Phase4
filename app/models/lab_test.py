@@ -1,5 +1,4 @@
 from django.db import models
-from app.models import Laboratory
 
 
 class LabTest(models.Model):
@@ -13,6 +12,13 @@ class LabTest(models.Model):
     )
 
     lab = models.ForeignKey(
-        to=Laboratory,
-        related_name='tests'
+        to='app.Laboratory',
+        related_name='tests',
+        on_delete=models.CASCADE,
+    )
+
+    test_description = models.ForeignKey(
+        to='app.TestDescription',
+        on_delete=models.CASCADE,
+        related_name='lab_tests',
     )
