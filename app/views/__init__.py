@@ -1,3 +1,4 @@
-from .get_list_of_labs_and_prices import GetListOfLabsAndPrices
+from .labs_and_prices import LabsAndPricesAPIView
 from .test_description_list_view import TestDescriptionListAPIView
 from .address_viewset import AddressViewSet
+from .time_slot import TimeSlotListAPIView

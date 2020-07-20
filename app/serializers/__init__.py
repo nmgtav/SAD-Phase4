@@ -1,2 +1,3 @@
 from .test_description_list_serializer import TestDescriptionListSerializer
+from .time_slot import TimeSlotListSerializer
 from .address_serializer import AddressSerializer
