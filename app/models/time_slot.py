@@ -1,11 +1,10 @@
 from django.db import models
-from app.models import Expert
 
 
 class TimeSlot(models.Model):
 
     expert = models.ForeignKey(
-        to=Expert,
+        to='app.Expert',
         on_delete=models.CASCADE,
     )
 
