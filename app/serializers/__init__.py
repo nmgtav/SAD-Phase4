@@ -1,1 +1,2 @@
 from .test_description_list_serializer import TestDescriptionListSerializer
+from .address_serializer import AddressSerializer
