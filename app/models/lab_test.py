@@ -8,7 +8,9 @@ class LabTest(models.Model):
         max_length=64,
     )
 
-    available = models.BooleanField()
+    available = models.BooleanField(
+        default=True,
+    )
 
     lab = models.ForeignKey(
         to=Laboratory,
