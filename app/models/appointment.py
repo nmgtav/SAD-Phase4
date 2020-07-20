@@ -1,5 +1,5 @@
 from django.db import models
-from app.models import TimeSlot, Pat
+from app.models import TimeSlot, Patient, Address
 
 
 class Appointment(models.Model):
@@ -9,4 +9,12 @@ class Appointment(models.Model):
         on_delete=models.CASCADE,
     )
 
+    patient = models.ForeignKey(
+        to=Patient,
+        on_delete=models.CASCADE,
+    )
 
+    address = models.ForeignKey(
+        to=Address,
+        on_delete=models.CASCADE,
+    )
