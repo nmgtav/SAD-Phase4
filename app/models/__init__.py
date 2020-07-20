@@ -7,3 +7,5 @@ from .test_description import TestDescription
 from .appointment import Appointment
 from .address import Address
 from .payment import Payment
+from .test import Test
+from .test_request import TestRequest
