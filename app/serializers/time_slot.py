@@ -15,4 +15,5 @@ class TimeSlotListSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         data['expert'] = instance.expert.user.first_name + '-' + instance.expert.user.last_name
+        data['laboratory'] = instance.expert.laboratory.name
         return data
