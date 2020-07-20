@@ -1,8 +1,9 @@
-from django.conf.urls import url
+from django.urls import path
 
-from app.views import GetListOfLabsAndPrices
+from app.views import GetListOfLabsAndPrices, TestDescriptionListAPIView
 
 
 urlpatterns = [
-    url(r'^get-list-of-labs-and-prices/?$', GetListOfLabsAndPrices.as_view()),
+    path('labs-and-prices/', GetListOfLabsAndPrices.as_view()),
+    path('tests/', TestDescriptionListAPIView.as_view()),
 ]
