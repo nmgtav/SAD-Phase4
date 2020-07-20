@@ -8,12 +8,11 @@ class TimeSlotListSerializer(serializers.ModelSerializer):
     class Meta:
         model = TimeSlot
         fields = (
-            'start_date',
-            'end_date',
             'id',
         )
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data['laboratory'] = instance.expert.laboratory.name
+        data['date'] = str(instance.start_date.date()) + ' ' + instance.start_date.strftime('%H:%M') + '-' + \
+                       instance.end_date.strftime('%H:%M')
         return data
