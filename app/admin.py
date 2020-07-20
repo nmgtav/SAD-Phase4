@@ -10,3 +10,7 @@ admin.site.register(LabTest)
 admin.site.register(Laboratory)
 admin.site.register(Patient)
 admin.site.register(TimeSlot)
+admin.site.register(TestRequest)
+admin.site.register(Test)
+admin.site.register(Payment)
+

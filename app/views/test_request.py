@@ -17,7 +17,7 @@ class TestRequestAPIView(APIView):
         laboratory = Laboratory.objects.get(
             id=self.request.data.get('laboratory')
         )
-        print(laboratory)
+
         lab_time_slot = TimeSlot.objects.get(
             id=self.request.data.get('time_slot'),
             expert__laboratory=laboratory,
@@ -26,12 +26,10 @@ class TestRequestAPIView(APIView):
 
         address = Address.objects.get(
             id=self.request.data.get('address'),
-            Patient=Patient
+            patient=patient
         )
 
         test_ids = self.request.data.get('tests')
-
-        print(test_ids)
 
         cost = 0
         for test_id in test_ids:
@@ -49,8 +47,8 @@ class TestRequestAPIView(APIView):
         )
 
         test_request = TestRequest.objects.create(
-            Payment=payment,
-            Appointment=appointment
+            payment_request=payment,
+            appointment=appointment
         )
 
         for test_id in test_ids:
@@ -59,7 +57,7 @@ class TestRequestAPIView(APIView):
                 test_request=test_request,
             )
 
-        Response({
+        return Response({
             'payment_redirect_url': '127.0.0.1:8000/api/payment-state/{payment_pk}/?is_successful='.format(
                 payment_pk=payment.id
             ),
