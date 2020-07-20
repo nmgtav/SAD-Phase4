@@ -7,7 +7,7 @@ from app.models import TestRequest, Patient, Laboratory, TimeSlot, Address, Appo
 from app.insurance_checker import Insurance
 
 
-class LabsAndPricesAPIView(APIView):
+class TestRequestAPIView(APIView):
 
     def post(self, request, *args, **kwargs):
         patient = Patient.objects.get(
@@ -17,7 +17,7 @@ class LabsAndPricesAPIView(APIView):
         laboratory = Laboratory.objects.get(
             id=self.request.data.get('laboratory')
         )
-
+        print(laboratory)
         lab_time_slot = TimeSlot.objects.get(
             id=self.request.data.get('time_slot'),
             expert__laboratory=laboratory,
@@ -29,10 +29,9 @@ class LabsAndPricesAPIView(APIView):
             Patient=Patient
         )
 
-        test_ids = self.request.data.get('tests', [])
+        test_ids = self.request.data.get('tests')
 
-        if test_ids:
-            test_ids = list(test_ids.split(','))
+        print(test_ids)
 
         cost = 0
         for test_id in test_ids:
