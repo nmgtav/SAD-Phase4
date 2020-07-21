@@ -17,7 +17,7 @@ class TestRequestHandler:
     def get_labs_and_prices(test_ids, patient_id):
         patient = DAO.get_patient(patient_id)
         proper_labs = [lab for lab in DAO.get_list_of_labs() if lab.has_every_test(test_ids)]
-
+        print(proper_labs)
         data = list()
         for lab in proper_labs:
 
@@ -53,6 +53,7 @@ class TestRequestHandler:
         lab = DAO.get_laboratory(lab_id)
         time_slots_list = lab.get_list_of_available_time_slots()
         result = []
+        print(time_slots_list)
         for time_slot in time_slots_list:
             result.append({
                 'id': time_slot.id,

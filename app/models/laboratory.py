@@ -17,7 +17,7 @@ class Laboratory(models.Model):
         return self.timeslot_set.filter(is_taken=False)
 
     def get_test(self, id):
-        return self.tests.get(id=id)
+        return self.tests.get(test_description_id=id)
 
     def get_time_slot(self, time_slot_id):
         return self.timeslot_set.get(id=time_slot_id, is_taken=False)
