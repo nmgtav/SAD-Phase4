@@ -208,11 +208,6 @@
 
   $( "#getAddresses" ).click(function() {
     var request = new XMLHttpRequest();
-    var selectedTests = $('#tests input:checked');
-    var str = selectedTests[0].getAttribute('name');
-    for (var i = 1; i < selectedTests.length; i++) {
-      str += ',' + selectedTests[i].getAttribute('name');
-    }
     request.open('GET', 'http://127.0.0.1:8000/api/addresses', true);
     request.onload = function () {
       // Begin accessing JSON data here
@@ -250,38 +245,39 @@
   });
 
   $( "#newAddress" ).click(function() {
+    $( "#newAddress" ).addClass('hidden');
+    $( "#newAddressForm" ).removeClass('hidden');
+  });
+
+  $( "#addNewAddress" ).click(function() {
     var request = new XMLHttpRequest();
-    var selectedTests = $('#tests input:checked');
-    var str = selectedTests[0].getAttribute('name');
-    for (var i = 1; i < selectedTests.length; i++) {
-      str += ',' + selectedTests[i].getAttribute('name');
-    }
-    request.open('GET', 'http://127.0.0.1:8000/api/addresses', true);
+    request.open('POST', 'http://127.0.0.1:8000/api/addresses/', true);
+    var requestData = {
+        address: $('input:text[name="writtenAddress"]').val()
+    };
     request.onload = function () {
       // Begin accessing JSON data here
       const container = document.getElementById('addresses');
       var data = JSON.parse(this.response);
-      if (request.status >= 200 && request.status < 400) {
-        patientAddresses = data;
-        data.forEach(address => {
-          const item = document.createElement('label');
-          item.setAttribute('class', 'item');
-          item.textContent = address.address;
+    if (request.status >= 200 && request.status < 400) {
+        const item = document.createElement('label');
+        item.setAttribute('class', 'item');
+        item.textContent = $('input:text[name="writtenAddress"]').val();
 
-          const radio = document.createElement('input');
-          radio.setAttribute('type', 'radio');
-          radio.setAttribute('name', 'address');
-          radio.setAttribute('value', address.id);
-          const checkmark = document.createElement('span');
-          checkmark.setAttribute('class', 'radio');
+        const radio = document.createElement('input');
+        radio.setAttribute('type', 'radio');
+        radio.setAttribute('checked', 'true');
+        radio.setAttribute('name', 'address');
+        radio.setAttribute('value', data.id);
+        const checkmark = document.createElement('span');
+        checkmark.setAttribute('class', 'radio');
 
-          container.appendChild(item);
-          item.appendChild(radio);
-          item.appendChild(checkmark);
+        container.appendChild(item);
+        item.appendChild(radio);
+        item.appendChild(checkmark);
 
-          $('#labSection').addClass('hidden');
-          $('#addressSection').removeClass('hidden');
-        });
+        $( "#newAddress" ).removeClass('hidden');
+        $( "#newAddressForm" ).addClass('hidden');
       } else {
         const errorMessage = document.createElement('marquee');
         errorMessage.textContent = `Gah, it's not working!`;
@@ -289,7 +285,7 @@
       }
     }
 
-    request.send();
+    request.send(JSON.stringify(requestData));
   });
 
   $( "#getTimeslots" ).click(function() {
@@ -393,14 +389,13 @@
 
   $( "#payButton" ).click(function() {
     var request = new XMLHttpRequest();
-    console.log(paymentURL);
-    request.open('GET', paymentURL+'1', true);
+    request.open('PATCH', paymentURL+'?is_successful=1', true);
     request.onload = function () {
       // Begin accessing JSON data here
       const container = document.getElementById('requestDetails');
-      var data = JSON.parse(this.response);
       if (request.status >= 200 && request.status < 400) {
-        $('#detailsSection h3').textContent = 'Appointment Booked';
+        $('#detailsSection h3').text('Appointment Booked');
+        $('#detailsSection .extra-information').text('Your test request has been completed. We will notify you when an expert has been assigned to your appointment.');
         $( "#payButton" ).addClass('hidden');
       } else {
         const errorMessage = document.createElement('marquee');
@@ -409,7 +404,7 @@
       }
     }
 
-    request.send(JSON.stringify(requestData));
+    request.send();
   });
 
 

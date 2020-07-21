@@ -125,6 +125,10 @@
           </div>
           <div class="item">
             <a id="newAddress" style="size: 2em"><i class="fa fa-plus-circle" aria-hidden="true" style="color: #1bb1dc"></i> Add an address</a>
+            <div id="newAddressForm" style="size: 2em" class="hidden">
+              <input type="text" name="writtenAddress" placeholder="New Address">
+              <button id="addNewAddress">Add</button>
+            </div>
           </div>
           <button id="getTimeslots">Next</button>
         </div>
@@ -137,7 +141,7 @@
         </div>
         <div id="detailsSection" class="row hidden">
           <h3>Appointment reserved</h3>
-          <p>This appointment is reserved for 15 minutes. To complete your request, please complete the payment within this time.</p>
+          <p class="extra-information">This appointment is reserved for 15 minutes. To complete your request, please complete the payment within this time.</p>
           <div id="requestDetails">
           </div>
           <button id="payButton">Pay</button>
