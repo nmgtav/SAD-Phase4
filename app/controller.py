@@ -1,5 +1,6 @@
 from app.insurance_checker import Insurance
-from app.models import TestDescription, Laboratory, Address, TimeSlot, Patient, Appointment, Payment, TestRequest, Test
+from app.models import (TestDescription, Laboratory, Address, TimeSlot, Patient,
+                        Appointment, Payment, TestRequest, Test)
 
 
 class TestRequestHandler:
@@ -11,7 +12,8 @@ class TestRequestHandler:
         return result
 
     @staticmethod
-    def get_labs_and_prices(test_ids, patient):
+    def get_labs_and_prices(test_ids, patient_id):
+        patient = Patient.objects.get(id=patient_id)
         proper_labs = [lab for lab in Laboratory.objects.all() if lab.has_every_test(test_ids)]
 
         data = list()
