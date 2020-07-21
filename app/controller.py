@@ -35,7 +35,7 @@ class TestRequestHandler:
     @staticmethod
     def get_list_of_addresses(patient_id):
         patient = Patient.objects.get(id=patient_id)
-        address_list = Address.get_list_of_addresses(patient)
+        address_list = patient.get_list_of_addresses()
         result = []
         for address in address_list:
             result.append({'address': address.address, 'id': address.id})

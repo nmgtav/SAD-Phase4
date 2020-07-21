@@ -7,3 +7,6 @@ class Patient(models.Model):
         to=User,
         on_delete=models.CASCADE,
     )
+
+    def get_list_of_addresses(self):
+        return self.addresses.all()
