@@ -2,13 +2,14 @@ from app.insurance_checker import Insurance
 from app.models import (TestDescription, Laboratory, Address, TimeSlot, Patient,
                         Appointment, Payment, TestRequest, Test)
 from app.payment_handler import PaymentHandler
+from app.dao import DAO
 
 
 class TestRequestHandler:
     @staticmethod
     def get_test_descriptions():
         result = []
-        for test in TestDescription.get_list_of_all_test_descriptions():
+        for test in DAO.get_list_of_all_test_descriptions():
             result.append({'id': test.id, 'name': test.name})
         return result
 
