@@ -252,6 +252,7 @@
   $( "#addNewAddress" ).click(function() {
     var request = new XMLHttpRequest();
     request.open('POST', 'http://127.0.0.1:8000/api/addresses/', true);
+    request.setRequestHeader('Content-Type', 'application/json');
     var requestData = {
         address: $('input:text[name="writtenAddress"]').val()
     };
@@ -263,6 +264,7 @@
         const item = document.createElement('label');
         item.setAttribute('class', 'item');
         item.textContent = $('input:text[name="writtenAddress"]').val();
+        patientAddresses.push({address:$('input:text[name="writtenAddress"]').val(), id:data.id});
 
         const radio = document.createElement('input');
         radio.setAttribute('type', 'radio');
