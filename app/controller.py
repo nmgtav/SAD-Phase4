@@ -27,7 +27,7 @@ class TestRequestHandler:
 
             lab_total_cost = 0
             for test_id in test_ids:
-                lab_total_cost += Insurance.get_price(lab.tests.get(test_description_id=test_id), patient)
+                lab_total_cost += Insurance.get_price(lab.get_test(test_id), patient)
 
             data_instance['price'] = lab_total_cost
             data.append(data_instance)
