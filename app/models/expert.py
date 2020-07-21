@@ -12,3 +12,6 @@ class Expert(models.Model):
         to='app.Laboratory',
         on_delete=models.CASCADE,
     )
+
+    def get_list_of_time_slots(self):
+        return self.timeslot_set.filter(is_taken=False)

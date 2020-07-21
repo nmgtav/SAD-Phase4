@@ -50,7 +50,8 @@ class TestRequestHandler:
 
     @staticmethod
     def get_time_slots(lab_id):
-        time_slots_list = TimeSlot.get_list_of_timeslots(lab_id)
+        lab = Laboratory.objects.get(id=lab_id)
+        time_slots_list = lab.get_list_of_time_slots()
         result = []
         for time_slot in time_slots_list:
             result.append({
