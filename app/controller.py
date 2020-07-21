@@ -1,6 +1,7 @@
 from app.insurance_checker import Insurance
 from app.models import (TestDescription, Laboratory, Address, TimeSlot, Patient,
                         Appointment, Payment, TestRequest, Test)
+from app.payment_handler import PaymentHandler
 
 
 class TestRequestHandler:
@@ -107,8 +108,10 @@ class TestRequestHandler:
                 test_request=test_request,
             )
 
+        payment_url = PaymentHandler.get_payment_url(payment)
+
         return {
-            'payment_id': payment.id,
+            'payment_url': payment_url,
             'cost': cost,
         }
 
