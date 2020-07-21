@@ -1,4 +1,4 @@
-from app.models import TestDescription, Laboratory, Patient
+from app.models import TestDescription, Laboratory, Patient, TimeSlot
 
 
 class DAO:
@@ -13,3 +13,7 @@ class DAO:
     @staticmethod
     def get_patient(patient_id):
         return Patient.objects.get(id=patient_id)
+
+    @staticmethod
+    def get_laboratory(id):
+        return Laboratory.objects.get(id=id)

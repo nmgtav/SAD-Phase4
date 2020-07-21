@@ -3,8 +3,8 @@ from django.db import models
 
 class TimeSlot(models.Model):
 
-    expert = models.ForeignKey(
-        to='app.Expert',
+    lab = models.ForeignKey(
+        to='app.Laboratory',
         on_delete=models.CASCADE,
     )
 

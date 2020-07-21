@@ -50,7 +50,7 @@ class TestRequestHandler:
 
     @staticmethod
     def get_time_slots(lab_id):
-        lab = Laboratory.objects.get(id=lab_id)
+        lab = DAO.get_laboratory(lab_id)
         time_slots_list = lab.get_list_of_time_slots()
         result = []
         for time_slot in time_slots_list:
@@ -66,50 +66,24 @@ class TestRequestHandler:
 
     @staticmethod
     def create_test_request(data):
-        patient = Patient.objects.get(id=data.get('patient'))
+        patient = DAO.get_patient(data.get('patient'))
 
-        laboratory = Laboratory.objects.get(id=data.get('laboratory'))
+        laboratory = DAO.get_laboratory(data.get('laboratory'))
 
-        lab_time_slot = TimeSlot.objects.get(
-            id=data.get('time_slot'),
-            expert__laboratory=laboratory,
-            is_taken=False
-        )
-
-        address = Address.objects.get(
-            id=data.get('address'),
-            patient=patient
+        lab_time_slot = laboratory.get_time_slot(
+            data.get('time_slot'),
         )
 
         test_ids = data.get('tests')
 
         cost = 0
         for test_id in test_ids:
-            cost += Insurance.get_price(laboratory.tests.get(test_description_id=test_id), patient)
+            cost += Insurance.get_price(laboratory.get_test(id=test_id), patient)
 
-        appointment = Appointment.objects.create(
-            time_slot=lab_time_slot,
-            address=address,
-            patient=patient,
-        )
+        test_request = TestRequest()
+        test_request.save(time_slot=lab_time_slot, cost=cost, address=data.get('address'), test_ids=test_ids)
 
-        payment = Payment.objects.create(
-            amount=cost,
-            is_successful=False
-        )
-
-        test_request = TestRequest.objects.create(
-            payment_request=payment,
-            appointment=appointment
-        )
-
-        for test_id in test_ids:
-            Test.objects.create(
-                lab_test=laboratory.tests.get(test_description_id=test_id),
-                test_request=test_request,
-            )
-
-        payment_url = PaymentHandler.get_payment_url(payment)
+        payment_url = test_request.get_payment_url()
 
         return {
             'payment_url': payment_url,
