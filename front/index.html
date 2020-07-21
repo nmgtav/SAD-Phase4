@@ -123,6 +123,9 @@
           <h3>Select saved address or add new address</h3>
           <div id="addresses">
           </div>
+          <div class="item">
+            <a id="newAddress" style="size: 2em"><i class="fa fa-plus-circle" aria-hidden="true" style="color: #1bb1dc"></i> Add an address</a>
+          </div>
           <button id="getTimeslots">Next</button>
         </div>
         <div id="timeslotSection" class="row hidden">
@@ -130,7 +133,14 @@
           <p>Your test appointment will happen sometime during this period. The test itself might not take as much time.</p>
           <div id="timeslots">
           </div>
-          <button id="getAddress">Next</button>
+          <button id="sendRequest">Book Appointment</button>
+        </div>
+        <div id="detailsSection" class="row hidden">
+          <h3>Appointment reserved</h3>
+          <p>This appointment is reserved for 15 minutes. To complete your request, please complete the payment within this time.</p>
+          <div id="requestDetails">
+          </div>
+          <button id="payButton">Pay</button>
         </div>
       </div>
 
