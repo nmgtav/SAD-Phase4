@@ -9,3 +9,9 @@ class Laboratory(models.Model):
 
     def get_available_tests(self):
         return self.tests.filter(available=True)
+
+    def has_every_test(self, tests):
+        for test_id in tests:
+            if not self.tests.filter(test_description_id=test_id, available=True).exists():
+                return False
+        return True
