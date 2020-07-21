@@ -1569,10 +1569,11 @@ h6 {
   }
 }
 
-#tests, #labs, #addresses, #timeslots {
+#tests, #labs, #addresses, #timeslots, #requestDetails {
   width: 100%;
   margin-left: 4em;
   margin-right: 4em;
+  position:relative;
 }
 
 .item {
@@ -1717,4 +1718,23 @@ input[type="radio"] {
   height: 0.8em;
   border-radius: 50%;
   background: white;
+}
+
+
+#detailsSection p {
+  width: 100%;
+  margin: 0;
+}
+
+.row {
+  position:relative;
+}
+
+.row button {
+  position: relative;
+  float: right;
+}
+
+#addressSection div {
+  width: 100%;
 }
