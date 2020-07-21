@@ -44,10 +44,9 @@ class TestRequestHandler:
 
     @staticmethod
     def create_new_address(data):
-        address = Address.objects.create(
-            **data
-        )
-        return address.id
+        patient = DAO.get_patient(data.get('patient_id'))
+        address_id = patient.create_address(data.get('address'))
+        return address_id
 
     @staticmethod
     def get_time_slots(lab_id):
