@@ -25,12 +25,12 @@ def initialize():
         name='sab lab'
     )
 
-    Expert.object.create(
+    Expert.objects.create(
         user=user1,
         laboratory=lab1
     )
 
-    Expert.object.create(
+    Expert.objects.create(
         user=user2,
         laboratory=lab2
     )
