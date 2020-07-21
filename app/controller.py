@@ -1,5 +1,5 @@
 from app.insurance_checker import Insurance
-from app.models import TestDescription, Laboratory, Address
+from app.models import TestDescription, Laboratory, Address, TimeSlot
 
 
 class TestRequestHandler:
@@ -12,7 +12,7 @@ class TestRequestHandler:
 
     @staticmethod
     def get_labs_and_prices(test_ids, patient):
-        proper_labs = [lab for lab in Laboratory.objects.all() if lab.has_every_test(test_ids   )]
+        proper_labs = [lab for lab in Laboratory.objects.all() if lab.has_every_test(test_ids)]
 
         data = list()
         for lab in proper_labs:
@@ -43,3 +43,18 @@ class TestRequestHandler:
             **data
         )
         return address.id
+
+    @staticmethod
+    def get_time_slots(lab_id):
+        time_slots_list = TimeSlot.get_list_of_timeslots(lab_id)
+        result = []
+        for time_slot in time_slots_list:
+            result.append({
+                'id': time_slot.id,
+                'date': (
+                        str(time_slot.start_date.date()) + ' '
+                        + time_slot.start_date.strftime('%H:%M') + '-'
+                        + time_slot.end_date.strftime('%H:%M')
+                )
+            })
+        return result
