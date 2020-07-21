@@ -165,6 +165,12 @@
   $( "#sendTests" ).click(function() {
     var request = new XMLHttpRequest();
     var selectedTests = $('#tests input:checked');
+    if(selectedTests.length == 0) {
+      const help = document.createElement('p');
+      help.textContent = 'Please select at least one test.';
+      $( "#testsSection" ).appendChild(help);
+      return;
+    }
     var str = selectedTests[0].getAttribute('name');
     for (var i = 1; i < selectedTests.length; i++) {
       str += ',' + selectedTests[i].getAttribute('name');
@@ -207,6 +213,12 @@
   });
 
   $( "#getAddresses" ).click(function() {
+    if($("input:radio[name ='lab']:checked").length == 0) {
+      const help = document.createElement('p');
+      help.textContent = 'Please select a laboratory.';
+      $( "#labsSection" ).appendChild(help);
+      return;
+    }
     var request = new XMLHttpRequest();
     request.open('GET', 'http://127.0.0.1:8000/api/addresses', true);
     request.onload = function () {
@@ -250,6 +262,9 @@
   });
 
   $( "#addNewAddress" ).click(function() {
+    if($('input:text[name="writtenAddress"]').val().length == 0) {
+      return;
+    }
     var request = new XMLHttpRequest();
     request.open('POST', 'http://127.0.0.1:8000/api/addresses/', true);
     request.setRequestHeader('Content-Type', 'application/json');
@@ -291,6 +306,12 @@
   });
 
   $( "#getTimeslots" ).click(function() {
+    if($("input:radio[name ='address']:checked").length == 0) {
+      const help = document.createElement('p');
+      help.textContent = 'Please select an address.';
+      $( "#addressSection" ).appendChild(help);
+      return;
+    }
     var request = new XMLHttpRequest();
     var selectedLab = $("input:radio[name ='lab']:checked").val();
     request.open('GET', 'http://127.0.0.1:8000/api/time-slots/?lab='+selectedLab, true);
@@ -331,6 +352,12 @@
   var paymentURL;
 
   $( "#sendRequest" ).click(function() {
+    if($("input:radio[name ='timeslot']:checked").length == 0) {
+      const help = document.createElement('p');
+      help.textContent = 'Please select a timeslot.';
+      $( "#timeslotSection" ).appendChild(help);
+      return;
+    }
     var request = new XMLHttpRequest();
     var selectedLab = $("input:radio[name ='lab']:checked").val();
     var selectedTimeSlot = $("input:radio[name ='timeslot']:checked").val();
