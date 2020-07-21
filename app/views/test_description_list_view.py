@@ -1,12 +1,14 @@
-from rest_framework.generics import ListAPIView
+from django.http import JsonResponse
+from rest_framework.views import APIView
 
-from app.models import TestDescription
-from app.serializers import TestDescriptionListSerializer
+from app.controller import TestRequestHandler
 
 
-class TestDescriptionListAPIView(ListAPIView):
-    def get_queryset(self):
-        return TestDescription.objects.all()
-
-    def get_serializer_class(self):
-        return TestDescriptionListSerializer
+class TestDescriptionListAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+        list_of_tests = TestRequestHandler.get_test_descriptions()
+        return JsonResponse(
+            data=list_of_tests,
+            status=200,
+            safe=False,
+        )

@@ -1,28 +1,24 @@
 from django.http import JsonResponse
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ViewSet
 
-from app.models import Address
-from app.serializers import AddressSerializer
+from app.controller import TestRequestHandler
 
 
-class AddressViewSet(ModelViewSet):
-    def get_queryset(self):
-        return Address.objects.filter(patient_id=1)
+class AddressViewSet(ViewSet):
 
-    def get_serializer_class(self):
-        return AddressSerializer
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        data = serializer.data
-        data['patient_id'] = 1
-        address = Address.objects.create(
-            **data
-        )
+    def get(self, request, *args, **kwargs):
+        list_of_addresses = TestRequestHandler.get_list_of_addresses(patient_id=1)
         return JsonResponse(
-            data={
-                'id': address.id
-            },
+            data=list_of_addresses,
+            status=200,
+            safe=False,
+        )
+
+    def post(self, request, *args, **kwargs):
+        data = request.data
+        data['patient_id'] = 1
+        new_address_id = TestRequestHandler.create_new_address(data)
+        return JsonResponse(
+            data={'id': new_address_id},
             status=200,
         )
