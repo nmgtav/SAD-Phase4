@@ -1,5 +1,5 @@
 from app.insurance_checker import Insurance
-from app.models import TestDescription, Laboratory, Address, TimeSlot
+from app.models import TestDescription, Laboratory, Address, TimeSlot, Patient, Appointment, Payment, TestRequest, Test
 
 
 class TestRequestHandler:
@@ -58,3 +58,52 @@ class TestRequestHandler:
                 )
             })
         return result
+
+    @staticmethod
+    def create_test_request(data):
+        patient = Patient.objects.get(id=data.get('patient'))
+
+        laboratory = Laboratory.objects.get(id=data.get('laboratory'))
+
+        lab_time_slot = TimeSlot.objects.get(
+            id=data.get('time_slot'),
+            expert__laboratory=laboratory,
+            is_taken=False
+        )
+
+        address = Address.objects.get(
+            id=data.get('address'),
+            patient=patient
+        )
+
+        test_ids = data.get('tests')
+
+        cost = 0
+        for test_id in test_ids:
+            cost += Insurance.get_price(laboratory.tests.get(test_description_id=test_id), patient)
+
+        appointment = Appointment.objects.create(
+            time_slot=lab_time_slot,
+            address=address,
+            patient=patient,
+        )
+
+        payment = Payment.objects.create(
+            amount=cost,
+            is_successful=False
+        )
+
+        test_request = TestRequest.objects.create(
+            payment_request=payment,
+            appointment=appointment
+        )
+
+        for test_id in test_ids:
+            Test.objects.create(
+                lab_test=laboratory.tests.get(test_description_id=test_id),
+                test_request=test_request,
+            )
+        return {
+            'payment_id': payment.id,
+            'cost': cost,
+        }
