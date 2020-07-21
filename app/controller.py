@@ -106,7 +106,13 @@ class TestRequestHandler:
                 lab_test=laboratory.tests.get(test_description_id=test_id),
                 test_request=test_request,
             )
+
         return {
             'payment_id': payment.id,
             'cost': cost,
         }
+
+    @staticmethod
+    def update_payment_status(payment_id, success):
+        payment = Payment.objects.get(id=payment_id)
+        payment.update_state(success)
