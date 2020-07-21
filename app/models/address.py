@@ -9,3 +9,7 @@ class Address(models.Model):
         related_name='addresses',
         on_delete=models.CASCADE,
     )
+
+    @staticmethod
+    def get_list_of_addresses(patient):
+        return Address.objects.filter(patient=patient)
