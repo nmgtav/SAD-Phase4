@@ -51,7 +51,7 @@ class TestRequestHandler:
     @staticmethod
     def get_time_slots(lab_id):
         lab = DAO.get_laboratory(lab_id)
-        time_slots_list = lab.get_list_of_time_slots()
+        time_slots_list = lab.get_list_of_available_time_slots()
         result = []
         for time_slot in time_slots_list:
             result.append({

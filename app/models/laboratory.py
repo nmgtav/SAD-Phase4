@@ -13,8 +13,8 @@ class Laboratory(models.Model):
                 return False
         return True
 
-    def get_list_of_time_slots(self):
-        return self.timeslot_set.all()
+    def get_list_of_available_time_slots(self):
+        return self.timeslot_set.filter(is_taken=False)
 
     def get_test(self, id):
         return self.tests.get(id=id)
