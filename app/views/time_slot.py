@@ -1,12 +1,14 @@
-from rest_framework.generics import ListAPIView
+from django.http import JsonResponse
+from rest_framework.views import APIView
 
-from app.models import TimeSlot
-from app.serializers import TimeSlotListSerializer
+from app.controller import TestRequestHandler
 
 
-class TimeSlotListAPIView(ListAPIView):
-    def get_queryset(self):
-        return TimeSlot.objects.filter(is_taken=False, expert__laboratory_id=self.request.query_params.get('lab'))
-
-    def get_serializer_class(self):
-        return TimeSlotListSerializer
+class TimeSlotListAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+        time_slots_list = TestRequestHandler.get_time_slots(self.request.query_params.get('lab'))
+        return JsonResponse(
+            data=time_slots_list,
+            status=200,
+            safe=False,
+        )
