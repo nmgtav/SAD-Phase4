@@ -15,8 +15,8 @@ class TestRequestHandler:
 
     @staticmethod
     def get_labs_and_prices(test_ids, patient_id):
-        patient = Patient.objects.get(id=patient_id)
-        proper_labs = [lab for lab in Laboratory.objects.all() if lab.has_every_test(test_ids)]
+        patient = DAO.get_patient(patient_id)
+        proper_labs = [lab for lab in DAO.get_list_of_labs() if lab.has_every_test(test_ids)]
 
         data = list()
         for lab in proper_labs:
