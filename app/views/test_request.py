@@ -1,11 +1,8 @@
 from django.http import JsonResponse
 from rest_framework import status
-from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from app.controller import TestRequestHandler
-from app.models import TestRequest, Patient, Laboratory, TimeSlot, Address, Appointment, Payment, Test
-from app.insurance_checker import Insurance
 
 
 class TestRequestAPIView(APIView):
@@ -15,7 +12,7 @@ class TestRequestAPIView(APIView):
         data['patient'] = 1
 
         result = TestRequestHandler.create_test_request(data)
-        return Response(
+        return JsonResponse(
             data={
                     'payment_redirect_url': 'http://127.0.0.1:8000/api/payment-state/{payment_pk}/'.format(
                         payment_pk=result.get('payment_id')
