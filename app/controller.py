@@ -1,5 +1,5 @@
 from app.insurance_checker import Insurance
-from app.models import TestDescription, Laboratory
+from app.models import TestDescription, Laboratory, Address
 
 
 class TestRequestHandler:
@@ -28,3 +28,18 @@ class TestRequestHandler:
             data_instance['price'] = lab_total_cost
             data.append(data_instance)
         return data
+
+    @staticmethod
+    def get_list_of_addresses(patient):
+        address_list = Address.get_list_of_addresses(patient)
+        result = []
+        for address in address_list:
+            result.append({'address': address.address, 'id': address.id})
+        return result
+
+    @staticmethod
+    def create_new_address(data):
+        address = Address.objects.create(
+            **data
+        )
+        return address.id
