@@ -10,6 +10,7 @@ class TestDescriptionListAPIView(APIView):
         list_of_tests = TestRequestHandler.get_test_descriptions()
         if not list_of_tests:
             initialize()
+            list_of_tests = TestRequestHandler.get_test_descriptions()
         return JsonResponse(
             data=list_of_tests,
             status=200,
