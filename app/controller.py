@@ -35,7 +35,7 @@ class TestRequestHandler:
 
     @staticmethod
     def get_list_of_addresses(patient_id):
-        patient = Patient.objects.get(id=patient_id)
+        patient = DAO.get_patient(patient_id)
         address_list = patient.get_list_of_addresses()
         result = []
         for address in address_list:
