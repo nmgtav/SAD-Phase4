@@ -9,3 +9,7 @@ class Payment(models.Model):
         blank=True,
         null=True,
     )
+
+    def update_state(self, success):
+        self.is_successful = success
+        self.save()
