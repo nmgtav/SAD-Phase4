@@ -30,7 +30,8 @@ class TestRequestHandler:
         return data
 
     @staticmethod
-    def get_list_of_addresses(patient):
+    def get_list_of_addresses(patient_id):
+        patient = Patient.objects.get(id=patient_id)
         address_list = Address.get_list_of_addresses(patient)
         result = []
         for address in address_list:
